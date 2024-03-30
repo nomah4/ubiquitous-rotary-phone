@@ -1,0 +1,31 @@
+version: '3.8'
+
+services:
+  discord:
+    build: ./web
+    env_file:
+      - ./messengers/discord/.env
+  instagram:
+    build: ./web
+    env_file:
+      - ./messengers/instagram/.env
+  telegram:
+    build: ./web
+    env_file:
+      - ./messengers/telegram/.env
+  vk:
+    build: ./web
+    env_file:
+      - ./messengers/vk/.env
+  viber: 
+    build: ./web
+    env_file:
+      - ./messengers/viber/.env
+  whatsapp:
+    build: ./web
+    env_file:
+      - ./messengers/whatsapp/.env
+  facebook:
+    build: ./web
+    env_file:
+      - ./messengers/facebook/.env

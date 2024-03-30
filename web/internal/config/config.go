@@ -1,6 +1,8 @@
 package config
 
 import (
+	"errors"
+	"fmt"
 	"log"
 	"os"
 
@@ -11,7 +13,7 @@ type Config struct {
 	AppName string `env:"APP_NAME" envDefault:"CLI_MSG_Service"`
 
 	AppVersion string // `env:"APP_VER"`
-	URL        string `env:"URL"`
+	URLPing        string `env:"URL"`
 	CheckPing  bool
 	URLFile    string `env:"URL_FILE"`
 	Sha256     string `env:"SHA256"`
@@ -20,33 +22,45 @@ type Config struct {
 	CheckLogin bool
 }
 
+func GetBoolVar(name string) bool {
+	return os.Getenv(name) == "true"
+}
+
+func GetStringVar(name string) string {
+	variable := os.Getenv(name)
+	if len(variable ) == 0 {
+		log.Fatalf(fmt.Sprintf("Variable %s is empty", name))
+	}
+	return variable
+}
+
 func NewConfig() (*Config, error) {
 	var cfg Config
 
 	err := godotenv.Load(".env")
 	if err != nil {
-		log.Fatalf("Ошибка при загрузке файла .env: - %v ", err)
+		log.Println("No .env file found")
 	}
 
 	cfg.AppName = os.Getenv("APP_NAME")
+	if len(cfg.AppName) == 0 {
+		return nil, errors.New("no APP_NAME env variable")
+	}
 	cfg.AppVersion = "0.0.1" // os.Getenv("APP_VER")
-	cfg.URL = os.Getenv("URL")
-	checkPing := os.Getenv("CHECK_PING")
-	if checkPing == "true" {
-		cfg.CheckPing = true
+	cfg.CheckPing = GetBoolVar("CHECK_PING")
+	if cfg.CheckPing {
+		cfg.URLPing = GetStringVar("URL_PING")
 	}
 
-	cfg.URLFile = os.Getenv("URL_FILE")
-	cfg.Sha256 = os.Getenv("SHA256")
-	checkFile := os.Getenv("CHECK_FILE")
-	if checkFile == "true" {
-		cfg.CheckFile = true
+	cfg.CheckFile = GetBoolVar("CHECK_FILE")
+	if cfg.CheckFile {
+		cfg.URLFile = GetStringVar("URL_FILE")
+		cfg.Sha256 = GetStringVar("SHA256")
 	}
 
-	cfg.URLLogin = os.Getenv("URL_LOGIN")
-	checkLogin := os.Getenv("CHECK_LOGIN")
-	if checkLogin == "true" {
-		cfg.CheckLogin = true
+	cfg.CheckLogin = GetBoolVar("CHECK_LOGIN")
+	if cfg.CheckLogin {
+		cfg.URLLogin = GetStringVar("URL_LOGIN")
 	}
 
 	return &cfg, nil
