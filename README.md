@@ -34,12 +34,11 @@ flowchart TD
         VK4 --> VK5["PING"]
         VK5 -->|"report"| SERVER
         
-        TG1["test Response"] --> TG2["Test favicon sha256"]
+        TG1["Test Response"] --> TG2["Test favicon sha256"]
         TG2 --> TG3["Test web"]
         TG3 -->|"report"| SERVER
         
-        INST --> I1["Test Response"]
-        I1 --> I2["Test favicon sha256"]
+        I1["Test Response"] --> I2["Test favicon sha256"]
         I2 --> I3["Test web"]
         I3 -->|"report"| SERVER
     end
