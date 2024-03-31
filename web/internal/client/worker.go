@@ -10,9 +10,8 @@ import (
 )
 
 func StartWorker(ctx context.Context, cfg *config.Config) (errR error) {
-
 	if cfg.CheckPing {
-		err := pingUrlWithTimeOutAndCount(cfg.URL, 10, time.Duration(5*time.Second))
+		err := pingUrlWithTimeOutAndCount(cfg.URLPing, 10, time.Duration(5*time.Second))
 		if err != nil {
 			log.Println(err)
 			errR = errors.Join(errR, err)
@@ -34,5 +33,5 @@ func StartWorker(ctx context.Context, cfg *config.Config) (errR error) {
 		}
 	}
 
-	return
+	return errR
 }

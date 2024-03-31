@@ -14,6 +14,4 @@ RUN GOOS=${TARGETOS} GOARCH=${TARGETARCH} go build -o /app
 FROM alpine:3.19
 
 COPY --from=builder /app /app
-COPY ./.env.example ./.env
-
 CMD ["/app"]
