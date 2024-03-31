@@ -5,27 +5,41 @@ services:
     build: ./web
     env_file:
       - ./messengers/discord/.env
+    token_file:
+      - user.conf
   instagram:
     build: ./web
     env_file:
       - ./messengers/instagram/.env
+    token_file:
+      - user.conf
   telegram:
     build: ./web
     env_file:
       - ./messengers/telegram/.env
+    token_file:
+      - user.conf
   vk:
     build: ./web
     env_file:
       - ./messengers/vk/.env
+    token_file:
+      - user.conf
   viber: 
     build: ./web
     env_file:
       - ./messengers/viber/.env
+    token_file:
+      - user.conf
   whatsapp:
     build: ./web
     env_file:
       - ./messengers/whatsapp/.env
+    token_file:
+      - user.conf
   facebook:
     build: ./web
     env_file:
       - ./messengers/facebook/.env
+    token_file:
+      - user.conf
